@@ -2,19 +2,20 @@
 
 class Interpolator {
   static interpolate(intervalArr, callback) {
-//    const inputArr = [];
-console.log(intervalArr);
+    const inputArr = [];
+    console.log(intervalArr);
     const resultArr = [];
 
     resultArr[0] = [];
     resultArr[1] = [];
 
     for(let i = intervalArr[0]; i <= (intervalArr[1] - intervalArr[0]); i += 0.1) {
-      resultArr[0].splice(resultArr[0].length, 0, Math.round(i*10000)/10000);
+      inputArr.splice(inputArr.length, 0, Math.round(i*10000)/10000);
     }
 
     for(let i = intervalArr[0]; i <= (intervalArr[1] - intervalArr[0]); i += 0.01) {
-      resultArr[1].splice(resultArr[1].length, 0, Interpolator.Newton(i, resultArr[0].length - 1, resultArr[0], callback(resultArr[0], 0.1), 0.1));
+      resultArr[0].splice(resultArr[0].length, 0, Math.round(i*10000)/10000);
+      resultArr[1].splice(resultArr[1].length, 0, Interpolator.Newton(i, inputArr.length - 1, inputArr, callback(inputArr, 0.1), 0.1));
     }
 
     console.log(resultArr[1]);
