@@ -1,0 +1,5 @@
+{
+  "sin(x)" : "sin.js",
+  "sin^2(x)" : "sin2.js",
+  "sin(x)^2" : "sin2.js"
+}
