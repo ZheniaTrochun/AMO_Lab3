@@ -14,7 +14,9 @@ class Interpolator {
 
     for(let i = intervalArr[0]; i <= (intervalArr[1] - intervalArr[0]); i += (intervalArr[1] - intervalArr[0])/100) {
       resultArr[0].splice(resultArr[0].length, 0, Math.round(i*10000)/10000);
-      resultArr[1].splice(resultArr[1].length, 0, Interpolator.Newton(i, inputArr.length - 1, inputArr, callback(inputArr, (intervalArr[1] - intervalArr[0])/10), (intervalArr[1] - intervalArr[0])/10));
+      resultArr[1].splice(resultArr[1].length, 0,
+        Interpolator.Newton(i, inputArr.length - 1, inputArr,
+          callback(inputArr, (intervalArr[1] - intervalArr[0])/10), (intervalArr[1] - intervalArr[0])/10));
     }
 
     return resultArr;
@@ -33,7 +35,9 @@ class Interpolator {
 
     for(let i = intervalArr[0]; i <= (intervalArr[1] - intervalArr[0]); i += (intervalArr[1] - intervalArr[0])/100) {
       resultArr[0].splice(resultArr[0].length, 0, Math.round(i*10000)/10000);
-      resultArr[1].splice(resultArr[1].length, 0, Interpolator.NewtonFromStart(i, inputArr.length - 1, inputArr, callback(inputArr, (intervalArr[1] - intervalArr[0])/10)));
+      resultArr[1].splice(resultArr[1].length, 0,
+        Interpolator.NewtonFromStart(i, inputArr.length - 1, inputArr,
+          callback(inputArr, (intervalArr[1] - intervalArr[0])/10)));
     }
 
     return resultArr;

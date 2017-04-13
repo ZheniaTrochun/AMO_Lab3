@@ -13,60 +13,6 @@ const sinclick = () => {
       .then(
         ajaxDelta
       );
-
-  // $.ajax({
-  //   type: 'POST',
-  //   url: 'http://localhost:8080/interpolate/sin',
-  //
-  //   data: {
-  //     startPoint: $('#startPoint').val(),
-  //     endPoint: $('#endPoint').val()
-  //   },
-  //
-  //   success: (res) => {
-  //
-  //     arr = res[0];
-  //     interRes[0] = res[1];
-  //
-  //     drawChart('interpolated', 'int-parent', arr, res[1], 'interpolated sin(x)');
-  //
-  //     $('#interpolated').show();
-  //
-  //   }
-  // });
-  //
-  // $.ajax({
-  //   type: 'POST',
-  //   url: 'http://localhost:8080/calculate/sin',
-  //
-  //   data: {
-  //     startPoint: $('#startPoint').val(),
-  //     endPoint: $('#endPoint').val()
-  //   },
-  //
-  //   success: (res) => {
-  //     interRes[1] = res;
-  //     drawChart('func', 'func-parent', arr, res, 'sin(x)');
-  //     $('#func').show();
-  //   }
-  // });
-  //
-  // $.ajax({
-  //   type: 'POST',
-  //   url: 'http://localhost:8080/delta',
-  //
-  //   data: {
-  //     int: interRes[0],
-  //     func: interRes[1]
-  //   },
-  //
-  //   success: (deltaResult) => {
-  //     drawChart('delta', 'delta-parent', arr, deltaResult, 'delta');
-  //     $('#delta').show();
-  //   }
-  //
-  // });
-
 };
 
 const sin2click = () => {
@@ -79,54 +25,6 @@ const sin2click = () => {
       .then(
         ajaxDelta
       );
-
-  // $.ajax({
-  //   type: 'POST',
-  //   url: 'http://localhost:8080/interpolate/sin2',
-  //
-  //   data: {
-  //     startPoint: $('#startPoint').val(),
-  //     endPoint: $('#endPoint').val()
-  //   },
-  //
-  //   success: (res) => {
-  //     arr = res[0];
-  //     interRes[0] = res[1];
-  //     drawChart('interpolated', 'int-parent', arr, res[1], 'interpolated sin^2(x)');
-  //     $('#interpolated').show();
-  //   }
-  // });
-  //
-  // $.ajax({
-  //   type: 'POST',
-  //   url: 'http://localhost:8080/calculate/sin2',
-  //
-  //   data: {
-  //     startPoint: $('#startPoint').val(),
-  //     endPoint: $('#endPoint').val()
-  //   },
-  //
-  //   success: (res) => {
-  //     interRes[1] = res;
-  //     drawChart('func', 'func-parent', arr, res, 'sin^2(x)');
-  //     $('#func').show();
-  //   }
-  // });
-  //
-  // $.ajax({
-  //   type: 'POST',
-  //   url: 'http://localhost:8080/delta',
-  //
-  //   data: {
-  //     int: interRes[0],
-  //     func: interRes[1]
-  //   },
-  //
-  //   success: (deltaResult) => {
-  //     drawChart('delta', 'delta-parent', arr, deltaResult, 'delta');
-  //     $('#delta').show();
-  //   }
-  // });
 };
 
 const ajaxFuncPromised = (url1, url2) => {

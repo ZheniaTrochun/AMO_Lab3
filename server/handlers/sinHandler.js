@@ -12,9 +12,6 @@ router.use((req, res, next) => {
 });
 
 router.post('/sin', (req, res) => {
-  //console.log(req.body);
-  //console.log(req.body.startPoint);
-  //console.log(req.body.endPoint);
   res.send(sinInterpolator.interpolate([+req.body.startPoint, +req.body.endPoint]));
 });
 

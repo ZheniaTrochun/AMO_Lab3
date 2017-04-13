@@ -19,5 +19,3 @@ class SinInterpolator extends newtonInterpolator {
 }
 
 module.exports = SinInterpolator;
-
-// console.log(SinInterpolator.interpolate([0, 1]));

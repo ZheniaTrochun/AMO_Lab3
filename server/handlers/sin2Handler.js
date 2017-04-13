@@ -12,9 +12,6 @@ router.use((req, res, next) => {
 });
 
 router.post('/sin2', (req, res) => {
-  console.log(req.body);
-  console.log(req.body.startPoint);
-    console.log(req.body.endPoint);
   res.send(sin2Interpolator.interpolate([+req.body.startPoint, +req.body.endPoint]));
 });
 
