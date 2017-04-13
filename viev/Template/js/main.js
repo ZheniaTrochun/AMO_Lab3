@@ -6,9 +6,9 @@ let arr = [];
 const sinclick = () => {
   if(!validation()) return;
 
-  ajaxFuncPromised('http://localhost:8080/interpolate/sin', 'http://localhost:8080/calculate/sin')
+  ajaxInterpolationPromised('http://localhost:8080/interpolate/sin', 'http://localhost:8080/calculate/sin')
       .then(
-        ajaxInterpolationPromised
+        ajaxFuncPromised
       )
       .then(
         ajaxDelta
@@ -18,20 +18,20 @@ const sinclick = () => {
 const sin2click = () => {
   if(!validation()) return;
 
-  ajaxFuncPromised('http://localhost:8080/interpolate/sin2', 'http://localhost:8080/calculate/sin2')
+  ajaxInterpolationPromised('http://localhost:8080/interpolate/sin2', 'http://localhost:8080/calculate/sin2')
       .then(
-        ajaxInterpolationPromised
+        ajaxFuncPromised
       )
       .then(
         ajaxDelta
       );
 };
 
-const ajaxFuncPromised = (url1, url2) => {
+const ajaxInterpolationPromised = (urlForInterpolation, urlForFunc) => {
   return new Promise((resolve, reject) => {
     $.ajax({
       type: 'POST',
-      url: url1,
+      url: urlForInterpolation,
 
       data: {
           startPoint: $('#startPoint').val(),
@@ -44,13 +44,13 @@ const ajaxFuncPromised = (url1, url2) => {
           interRes[0] = res[1];
           drawChart('interpolated', 'int-parent', res[0], res[1], 'interpolated sin^2(x)');
           $('#interpolated').show();
-          resolve(url2, res[0], res[1]);
+          resolve(urlForFunc);
         }
     });
   });
 };
 
-const ajaxInterpolationPromised = (url) => {
+const ajaxFuncPromised = (url) => {
   return new Promise((resolve, reject) => {
     $.ajax({
       type: 'POST',
