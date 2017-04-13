@@ -3,7 +3,6 @@
 class Interpolator {
   static interpolate(intervalArr, callback) {
     const inputArr = [];
-    console.log(intervalArr);
     const resultArr = [];
 
     resultArr[0] = [];
@@ -18,15 +17,11 @@ class Interpolator {
       resultArr[1].splice(resultArr[1].length, 0, Interpolator.Newton(i, inputArr.length - 1, inputArr, callback(inputArr, (intervalArr[1] - intervalArr[0])/10), (intervalArr[1] - intervalArr[0])/10));
     }
 
-    console.log(resultArr[1]);
-    console.log(callback(resultArr[0], (intervalArr[1] - intervalArr[0])/100));
-
     return resultArr;
   }
 
   static interpolateFromStart(intervalArr, callback) {
     const inputArr = [];
-    console.log(intervalArr);
     const resultArr = [];
 
     resultArr[0] = [];
@@ -41,13 +36,10 @@ class Interpolator {
       resultArr[1].splice(resultArr[1].length, 0, Interpolator.NewtonFromStart(i, inputArr.length - 1, inputArr, callback(inputArr, (intervalArr[1] - intervalArr[0])/10)));
     }
 
-    console.log(resultArr[1]);
-    console.log(callback(resultArr[0], (intervalArr[1] - intervalArr[0])/100));
-
     return resultArr;
   }
 
-  static NewtonfromStart(t, n, x, y) {
+  static NewtonFromStart(t, n, x, y) {
     let res = y[0];
     let f;
     let den;

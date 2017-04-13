@@ -6,118 +6,179 @@ let arr = [];
 const sinclick = () => {
   if(!validation()) return;
 
-  $.ajax({
-    type: 'POST',
-    url: 'http://localhost:8080/interpolate/sin',
+  ajaxFuncPromised('http://localhost:8080/interpolate/sin', 'http://localhost:8080/calculate/sin')
+      .then(
+        ajaxInterpolationPromised
+      )
+      .then(
+        ajaxDelta
+      );
 
-    data: {
-      startPoint: $('#startPoint').val(),
-      endPoint: $('#endPoint').val()
-    },
-
-    success: (res) => {
-
-      arr = res[0];
-      interRes[0] = res[1];
-
-      drawChart('interpolated', 'int-parent', arr, res[1], 'interpolated sin(x)');
-
-      $('#interpolated').show();
-
-    }
-  });
-
-  $.ajax({
-    type: 'POST',
-    url: 'http://localhost:8080/calculate/sin',
-
-    data: {
-      startPoint: $('#startPoint').val(),
-      endPoint: $('#endPoint').val()
-    },
-
-    success: (res) => {
-
-      interRes[1] = res;
-
-      drawChart('func', 'func-parent', arr, res, 'sin(x)');
-
-      $('#func').show();
-
-    }
-
-  });
-
-  $.ajax({
-    type: 'POST',
-    url: 'http://localhost:8080/delta',
-
-
-    data: {
-      int: interRes[0],
-      func: interRes[1]
-    },
-
-    success: (deltaResult) => {
-      console.log(deltaResult);
-
-      drawChart('delta', 'delta-parent', arr, deltaResult, 'delta');
-
-      $('#delta').show();
-    }
-
-  });
+  // $.ajax({
+  //   type: 'POST',
+  //   url: 'http://localhost:8080/interpolate/sin',
+  //
+  //   data: {
+  //     startPoint: $('#startPoint').val(),
+  //     endPoint: $('#endPoint').val()
+  //   },
+  //
+  //   success: (res) => {
+  //
+  //     arr = res[0];
+  //     interRes[0] = res[1];
+  //
+  //     drawChart('interpolated', 'int-parent', arr, res[1], 'interpolated sin(x)');
+  //
+  //     $('#interpolated').show();
+  //
+  //   }
+  // });
+  //
+  // $.ajax({
+  //   type: 'POST',
+  //   url: 'http://localhost:8080/calculate/sin',
+  //
+  //   data: {
+  //     startPoint: $('#startPoint').val(),
+  //     endPoint: $('#endPoint').val()
+  //   },
+  //
+  //   success: (res) => {
+  //     interRes[1] = res;
+  //     drawChart('func', 'func-parent', arr, res, 'sin(x)');
+  //     $('#func').show();
+  //   }
+  // });
+  //
+  // $.ajax({
+  //   type: 'POST',
+  //   url: 'http://localhost:8080/delta',
+  //
+  //   data: {
+  //     int: interRes[0],
+  //     func: interRes[1]
+  //   },
+  //
+  //   success: (deltaResult) => {
+  //     drawChart('delta', 'delta-parent', arr, deltaResult, 'delta');
+  //     $('#delta').show();
+  //   }
+  //
+  // });
 
 };
 
 const sin2click = () => {
   if(!validation()) return;
-  
-  $.ajax({
-    type: 'POST',
-    url: 'http://localhost:8080/interpolate/sin2',
 
-    data: {
-      startPoint: $('#startPoint').val(),
-      endPoint: $('#endPoint').val()
-    },
+  ajaxFuncPromised('http://localhost:8080/interpolate/sin2', 'http://localhost:8080/calculate/sin2')
+      .then(
+        ajaxInterpolationPromised
+      )
+      .then(
+        ajaxDelta
+      );
 
-    success: (res) => {
+  // $.ajax({
+  //   type: 'POST',
+  //   url: 'http://localhost:8080/interpolate/sin2',
+  //
+  //   data: {
+  //     startPoint: $('#startPoint').val(),
+  //     endPoint: $('#endPoint').val()
+  //   },
+  //
+  //   success: (res) => {
+  //     arr = res[0];
+  //     interRes[0] = res[1];
+  //     drawChart('interpolated', 'int-parent', arr, res[1], 'interpolated sin^2(x)');
+  //     $('#interpolated').show();
+  //   }
+  // });
+  //
+  // $.ajax({
+  //   type: 'POST',
+  //   url: 'http://localhost:8080/calculate/sin2',
+  //
+  //   data: {
+  //     startPoint: $('#startPoint').val(),
+  //     endPoint: $('#endPoint').val()
+  //   },
+  //
+  //   success: (res) => {
+  //     interRes[1] = res;
+  //     drawChart('func', 'func-parent', arr, res, 'sin^2(x)');
+  //     $('#func').show();
+  //   }
+  // });
+  //
+  // $.ajax({
+  //   type: 'POST',
+  //   url: 'http://localhost:8080/delta',
+  //
+  //   data: {
+  //     int: interRes[0],
+  //     func: interRes[1]
+  //   },
+  //
+  //   success: (deltaResult) => {
+  //     drawChart('delta', 'delta-parent', arr, deltaResult, 'delta');
+  //     $('#delta').show();
+  //   }
+  // });
+};
 
-      arr = res[0];
-      interRes[0] = res[1];
+const ajaxFuncPromised = (url1, url2) => {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: 'POST',
+      url: url1,
 
-      drawChart('interpolated', 'int-parent', arr, res[1], 'interpolated sin^2(x)');
+      data: {
+          startPoint: $('#startPoint').val(),
+          endPoint: $('#endPoint').val()
+        },
 
-      $('#interpolated').show();
-
-    }
+      success: (res) => {
+        console.log(1);
+          arr = res[0];
+          interRes[0] = res[1];
+          drawChart('interpolated', 'int-parent', res[0], res[1], 'interpolated sin^2(x)');
+          $('#interpolated').show();
+          resolve(url2, res[0], res[1]);
+        }
+    });
   });
+};
 
-  $.ajax({
-    type: 'POST',
-    url: 'http://localhost:8080/calculate/sin2',
+const ajaxInterpolationPromised = (url) => {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: 'POST',
+      url: url,
 
-    data: {
-      startPoint: $('#startPoint').val(),
-      endPoint: $('#endPoint').val()
-    },
+      data: {
+        startPoint: $('#startPoint').val(),
+        endPoint: $('#endPoint').val()
+      },
 
-    success: (res) => {
-      interRes[1] = res;
-
-      drawChart('func', 'func-parent', arr, res, 'sin^2(x)');
-
-      $('#func').show();
-
-    }
-
+      success: (res) => {
+        console.log(2);
+        interRes[1] = res;
+        drawChart('func', 'func-parent', arr, res, 'sin^2(x)');
+        $('#func').show();
+        resolve();
+      }
+    });
   });
+};
 
+const ajaxDelta = () => {
+  console.log(3);
   $.ajax({
     type: 'POST',
     url: 'http://localhost:8080/delta',
-
 
     data: {
       int: interRes[0],
@@ -125,15 +186,10 @@ const sin2click = () => {
     },
 
     success: (deltaResult) => {
-      console.log(deltaResult);
-
       drawChart('delta', 'delta-parent', arr, deltaResult, 'delta');
-
       $('#delta').show();
     }
-
   });
-
 };
 
 const drawChart = (id, parentId, xArr, yArr, label) => {
@@ -169,7 +225,7 @@ const drawChart = (id, parentId, xArr, yArr, label) => {
 };
 
 const refreshCanvas = (id, parentId) => {
-  $('#' + id).remove(); // this is my <canvas> element
+  $('#' + parentId).html('');
   $('#' + parentId).append('<canvas id="' + id + '" width="400" height="400"><canvas>');
 };
 
