@@ -9,19 +9,66 @@ class Interpolator {
     resultArr[0] = [];
     resultArr[1] = [];
 
-    for(let i = intervalArr[0]; i <= (intervalArr[1] - intervalArr[0]); i += 0.1) {
+    for(let i = intervalArr[0]; i <= (intervalArr[1] - intervalArr[0]); i += (intervalArr[1] - intervalArr[0])/10) {
       inputArr.splice(inputArr.length, 0, Math.round(i*10000)/10000);
     }
 
-    for(let i = intervalArr[0]; i <= (intervalArr[1] - intervalArr[0]); i += 0.01) {
+    for(let i = intervalArr[0]; i <= (intervalArr[1] - intervalArr[0]); i += (intervalArr[1] - intervalArr[0])/100) {
       resultArr[0].splice(resultArr[0].length, 0, Math.round(i*10000)/10000);
-      resultArr[1].splice(resultArr[1].length, 0, Interpolator.Newton(i, inputArr.length - 1, inputArr, callback(inputArr, 0.1), 0.1));
+      resultArr[1].splice(resultArr[1].length, 0, Interpolator.Newton(i, inputArr.length - 1, inputArr, callback(inputArr, (intervalArr[1] - intervalArr[0])/10), (intervalArr[1] - intervalArr[0])/10));
     }
 
     console.log(resultArr[1]);
-    console.log(callback(resultArr[0], 0.01));
+    console.log(callback(resultArr[0], (intervalArr[1] - intervalArr[0])/100));
 
     return resultArr;
+  }
+
+  static interpolateFromStart(intervalArr, callback) {
+    const inputArr = [];
+    console.log(intervalArr);
+    const resultArr = [];
+
+    resultArr[0] = [];
+    resultArr[1] = [];
+
+    for(let i = intervalArr[0]; i <= (intervalArr[1] - intervalArr[0]); i += (intervalArr[1] - intervalArr[0])/10) {
+      inputArr.splice(inputArr.length, 0, Math.round(i*10000)/10000);
+    }
+
+    for(let i = intervalArr[0]; i <= (intervalArr[1] - intervalArr[0]); i += (intervalArr[1] - intervalArr[0])/100) {
+      resultArr[0].splice(resultArr[0].length, 0, Math.round(i*10000)/10000);
+      resultArr[1].splice(resultArr[1].length, 0, Interpolator.NewtonFromStart(i, inputArr.length - 1, inputArr, callback(inputArr, (intervalArr[1] - intervalArr[0])/10)));
+    }
+
+    console.log(resultArr[1]);
+    console.log(callback(resultArr[0], (intervalArr[1] - intervalArr[0])/100));
+
+    return resultArr;
+  }
+
+  static NewtonfromStart(t, n, x, y) {
+    let res = y[0];
+    let f;
+    let den;
+
+    for(let i = 0; i < n; i++) {
+      f = 0;
+      for(let j = 0; j <= i; j++) {
+        den = 1;
+        for(let k = 0; k <= i; k++) {
+          if(k != j) den *= (x[j] - x[k]);
+        }
+        f += y[j]/den;
+      }
+
+      for(let k = 0; k < i; k++) {
+        f *= (t - x[k]);
+      }
+      res += f;
+    }
+
+    return res;
   }
 
   // Newton interpolation
