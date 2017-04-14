@@ -6,6 +6,7 @@ const utils = require(__base + 'utils/utils');
 const splinesNum = 100;
 
 class Interpolator {
+  
   static interpolate(startPoint, endPoint, funcStr, nodes) {
     const xArrForInterpolation = [];
 
@@ -20,15 +21,25 @@ class Interpolator {
 
     for(let i = startPoint; i <= endPoint; i += (len)/splinesNum) {
       xArr.splice(xArr.length, 0, utils.roundDoubleNum(i, 4));
+
       yArr.splice(yArr.length, 0,
         Interpolator.NewtonFromStart(i, xArrForInterpolation.length - 1, xArrForInterpolation,
-          utils.calculate(xArrForInterpolation, funcStr, nodes), len/nodes));
+          utils.calculate(xArrForInterpolation, funcStr, nodes)));
     }
-          console.log(yArr);
+
     return [xArr, yArr];
   }
 
-  static NewtonFromStart(t, n, x, y) {
+
+/**
+  * method for gettin y-coordinate of interpolated function with x-coordinate
+  *
+  * item - x coordinate of interpolation dot
+  * n - number of interpolation nodes
+  * x - array with x-coordinates of interpolation nodes
+  * y - array with y-coordinates of interpolation nodes
+*/
+  static NewtonFromStart(item, n, x, y) {
     let res = 0;
     let f;
     let den;
@@ -44,7 +55,7 @@ class Interpolator {
       }
 
       for(let k = 0; k < i; k++) {
-        f *= (t - x[k]);
+        f *= (item - x[k]);
       }
       res += f;
     }
