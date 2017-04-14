@@ -1,12 +1,10 @@
 
-let interRes = [];
-let arr = [];
+const serverUrl = 'http://localhost:8080';
 
-
-const sinclick = () => {
+const calculateClick = () => {
   if(!validation()) return;
 
-  ajaxInterpolationPromised('http://localhost:8080/interpolate/sin', 'http://localhost:8080/calculate/sin')
+  ajaxInterpolationPromised()
       .then(
         ajaxFuncPromised
       )
@@ -15,76 +13,68 @@ const sinclick = () => {
       );
 };
 
-const sin2click = () => {
-  if(!validation()) return;
-
-  ajaxInterpolationPromised('http://localhost:8080/interpolate/sin2', 'http://localhost:8080/calculate/sin2')
-      .then(
-        ajaxFuncPromised
-      )
-      .then(
-        ajaxDelta
-      );
-};
-
-const ajaxInterpolationPromised = (urlForInterpolation, urlForFunc) => {
+const ajaxInterpolationPromised = () => {
   return new Promise((resolve, reject) => {
     $.ajax({
       type: 'POST',
-      url: urlForInterpolation,
+      url: serverUrl + '/interpolate',
 
       data: {
           startPoint: $('#startPoint').val(),
-          endPoint: $('#endPoint').val()
+          endPoint: $('#endPoint').val(),
+          funcStr: $('#funcStr').val(),
+          nodes: $('#nodes').val()
         },
 
       success: (res) => {
-        console.log(1);
-          arr = res[0];
-          interRes[0] = res[1];
-          drawChart('interpolated', 'int-parent', res[0], res[1], 'interpolated sin^2(x)');
+          drawChart('interpolated', 'int-parent', res[0], res[1], 'interpolated ' + $('#funcStr').val());
           $('#interpolated').show();
-          resolve(urlForFunc);
+          resolve(res);
         }
     });
   });
 };
 
-const ajaxFuncPromised = (url) => {
+const ajaxFuncPromised = (interpolationRes) => {
   return new Promise((resolve, reject) => {
     $.ajax({
       type: 'POST',
-      url: url,
+      url: serverUrl + '/calculate',
 
       data: {
         startPoint: $('#startPoint').val(),
-        endPoint: $('#endPoint').val()
+        endPoint: $('#endPoint').val(),
+        funcStr: $('#funcStr').val(),
+        nodes: $('#nodes').val()
       },
 
       success: (res) => {
-        console.log(2);
-        interRes[1] = res;
-        drawChart('func', 'func-parent', arr, res, 'sin^2(x)');
+
+        const transferObj = {
+          interpolationRes: interpolationRes,
+          calculationRes: res
+        };
+
+        drawChart('func', 'func-parent', interpolationRes[0], res, $('#funcStr').val());
         $('#func').show();
-        resolve();
+        resolve(transferObj);
       }
     });
   });
 };
 
-const ajaxDelta = () => {
-  console.log(3);
+const ajaxDelta = (transferObj) => {
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:8080/delta',
+    url: serverUrl + '/delta',
 
     data: {
-      int: interRes[0],
-      func: interRes[1]
+      int: transferObj.interpolationRes[1],
+      func: transferObj.calculationRes
     },
 
     success: (deltaResult) => {
-      drawChart('delta', 'delta-parent', arr, deltaResult, 'delta');
+      drawChart('delta', 'delta-parent', transferObj.interpolationRes[0], deltaResult, 'delta');
       $('#delta').show();
     }
   });
@@ -124,18 +114,24 @@ const drawChart = (id, parentId, xArr, yArr, label) => {
 
 const refreshCanvas = (id, parentId) => {
   $('#' + parentId).html('');
-  $('#' + parentId).append('<canvas id="' + id + '" width="400" height="400"><canvas>');
+  $('#' + parentId).append('<canvas id="' + id + '"><canvas>');
 };
 
-const validation = () => {  if($('#startPoint').val() >= $('#endPoint').val()) {
+const validation = () => {
+  if($('#startPoint').val() >= $('#endPoint').val() ||
+                $('#nodes').val() <= 0 || !$('#funcStr').val()) {
     $('#startPoint').css({'color' : 'red'});
     $('#endPoint').css({'color' : 'red'});
+    $('#funcStr').css({'color' : 'red'});
+    $('#nodes').css({'color' : 'red'});
 
     return false;
   }
 
   $('#startPoint').css({'color' : 'black'});
   $('#endPoint').css({'color' : 'black'});
+  $('#nodes').css({'color' : 'red'});
+  $('#funcStr').css({'color' : 'red'});
 
   return true;
 };

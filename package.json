@@ -2,9 +2,11 @@
   "name": "lab_amo_3",
   "version": "1.0.0",
   "description": "amo lab3 Evgenii",
-  "main": "server/server.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "babel -d src/ server/  && node src/server.js",
+    "prepublish": "npm run compile"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,10 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "chart.js": "^2.5.0",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "mathjs": "^3.11.5"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1"
   }
 }
