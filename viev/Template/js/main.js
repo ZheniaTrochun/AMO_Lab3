@@ -1,5 +1,5 @@
 
-const serverUrl = 'http://localhost:8080';
+const serverUrl = '';
 
 const calculateClick = () => {
   if(!validation()) return;

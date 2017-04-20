@@ -5,7 +5,8 @@
   "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "babel -d src/ server/  && node src/server.js",
+    "compile": "babel server/ --out-dir src/ && node src/server.js",
+    "launch": "node src/server.js",
     "prepublish": "npm run compile"
   },
   "repository": {
