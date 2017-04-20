@@ -1,23 +1,35 @@
-
 'use strict';
-
 global.__base = __dirname + '/';
 
-const express = require('express');
+var _express = require('express');
 
-const interpolationHndlr = require('./handlers/interpolationHndlr');
+var _express2 = _interopRequireDefault(_express);
 
-const calculationHandler = require('./handlers/calculationHandler');
-//const sin2CalculationHandler = require('./calculationHandlers/sin2Handler');
+var _interpolationHndlr = require('./handlers/interpolationHndlr');
 
-const deltaHandler = require('./handlers/deltaHandler');
+var _interpolationHndlr2 = _interopRequireDefault(_interpolationHndlr);
 
-const app = express();
+var _calculationHandler = require('./handlers/calculationHandler');
+
+var _calculationHandler2 = _interopRequireDefault(_calculationHandler);
+
+var _deltaHandler = require('./handlers/deltaHandler');
+
+var _deltaHandler2 = _interopRequireDefault(_deltaHandler);
+
+var _bodyParser = require('body-parser');
+
+var _bodyParser2 = _interopRequireDefault(_bodyParser);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+
+var app = _express();
 
 // body parser
-const bodyParser = require('body-parser');
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+app.use(_bodyParser2.default.json()); // support json encoded bodies
+app.use(_bodyParser2.default.urlencoded({ extended: true })); // support encoded bodies
 
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
@@ -33,14 +45,14 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(express.static('viev/Template'));
+app.use(_express.static('/home/zhenia/lab_amo_3/viev/Template'));
 
-app.use('/interpolate', interpolationHndlr);
+app.use('/interpolate', _interpolationHndlr);
 
-app.use('/calculate', calculationHandler);
+app.use('/calculate', _calculationHandler);
 
-app.use('/delta', deltaHandler);
+app.use('/delta', _deltaHandler);
 
-app.listen(8080, () => {
+app.listen(8080, function () {
     console.log('App listening on port 8080!');
 });

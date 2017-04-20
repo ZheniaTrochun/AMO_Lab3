@@ -1,14 +1,20 @@
-
 'use strict';
 
-const express = require('express');
-const router = express.Router();
+var _express = require('express');
 
-const utils = require(__base + 'utils/utils');
+var _express2 = _interopRequireDefault(_express);
 
-router.post('/', (req, res) => {
+var _utils = require(global.__base + 'utils/utils.js');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var router = _express2.default.Router();
+
+router.post('/', function (req, res) {
   console.log(req.body);
-  res.send(utils.calculate([+req.body.startPoint, +req.body.endPoint], req.body.funcStr, 100));
+  res.send(_utils2.default.calculate([+req.body.startPoint, +req.body.endPoint], req.body.funcStr, 100));
 });
 
 module.exports = router;

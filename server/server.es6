@@ -1,25 +1,22 @@
 
-'use strict'
-
 global.__base = __dirname + '/';
 
-const express = require('express');
+import express from 'express';
 
-const interpolationHndlr = require('./handlers/interpolationHndlr');
+import interpolationHndlr from './handlers/interpolationHndlr';
 
-const calculationHandler = require('./handlers/calculationHandler');
-//const sin2CalculationHandler = require('./calculationHandlers/sin2Handler');
+import calculationHandler from './handlers/calculationHandler';
 
-const deltaHandler = require('./handlers/deltaHandler');
+import deltaHandler from './handlers/deltaHandler';
 
 const app = express();
 
 // body parser
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');
     // Request methods you wish to allow

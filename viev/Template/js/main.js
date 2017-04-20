@@ -130,8 +130,8 @@ const validation = () => {
 
   $('#startPoint').css({'color' : 'black'});
   $('#endPoint').css({'color' : 'black'});
-  $('#nodes').css({'color' : 'red'});
-  $('#funcStr').css({'color' : 'red'});
+  $('#nodes').css({'color' : 'black'});
+  $('#funcStr').css({'color' : 'black'});
 
   return true;
 };

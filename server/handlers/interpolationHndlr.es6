@@ -1,14 +1,11 @@
 
-'use strict'
-
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const Interpolator = require(__base + 'interpolators/newtonInterpolator');
+import Interpolator from 'newtonInterpolator.js';
 
 router.post('/', (req, res) => {
-  console.log(req.body);
   res.send(Interpolator.interpolate(+req.body.startPoint, +req.body.endPoint, req.body.funcStr, +req.body.nodes));
 });
 
-module.exports = router;
+export { router };
